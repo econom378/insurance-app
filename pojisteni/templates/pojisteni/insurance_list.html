@@ -1,0 +1,86 @@
+{% extends 'pojisteni/base.html' %}
+
+{% block title %}Pojištění{% endblock %}
+
+{% block content %}
+    <div class="pojistenci jumbotron"><h1>Pojištění</h1></div>
+
+    <p></p>
+    <table class="table table-hover w-100">
+        <thead class="table-dark">
+            <th>Č.Poj.</th>
+            <th>Pojištěný</th>
+            <th>Typ pojištění</th>
+            <th>Datum vzniku</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for insurance in obj %}
+
+                <tr>
+                    <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{ insurance.id }}</a></td>
+                    <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{ insurance.policyholder}}</a></td>
+                    <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{insurance.insurance_type}}</a></td>
+                    <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{ insurance.created }}</a></td>
+                    <td>
+
+                            {% if perms.pojisteni.change_insurancemodel %}
+                                <a class="btn btn-warning text-white" href="{% url 'update_insurance'  insurance.id %}"> Editovat </a>
+                            {% endif %}
+
+                            {% if perms.pojisteni.delete_insurancemodel %}
+                                <a class="btn btn-danger" href="{% url 'delete_insurance'  insurance.id %}"> Odstranit </a>
+                            {% endif %}
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="container">
+        <div class = "row justify-content-center">
+            <div class="col-sm-auto">
+                <nav aria-label="...">
+                    <ul class="pagination">
+
+                        {% if obj.has_previous %}
+                            <li class="page-item ">
+                              <a class="page-link" href="{% url 'insurance_list'%}?page={{ obj.previous_page_number }}" tabindex="-1" aria-disabled="false">Previous</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                        {% endif %}
+
+
+                        {% for item in pages %}
+                            {% if item == page_num %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="{% url 'insurance_list'%}?page={{ item }}">{{ item }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{% url 'insurance_list'%}?page={{ item }}">{{ item }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+
+                        {% if obj.has_next %}
+                            <li class="page-item ">
+                              <a class="page-link" href="{% url 'insurance_list'%}?page={{ obj.next_page_number }}">Next</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                              <a class="page-link" href="#">Next</a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

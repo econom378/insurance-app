@@ -1,0 +1,80 @@
+{% extends 'pojisteni/base.html' %}
+
+{% block title %}Pojištění{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p><h3>Informace o pojištění</h3></p>
+        <form>
+            <div class="form-group row" >
+                <label for="birth_id_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Rodné číslo pojištěnce: </label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="birth_id_input" value="{{ obj.policyholder }}" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="paid_by_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Smlouvu uzavřel: </label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="paid_by_input" value="{{ obj.paid_by }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="insurance_type_input"  class="col-form-label-lg col-12 col-sm-6 col-md-4">Druh pojištění: </label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="insurance_type_input" value="{{ obj.insurance_type }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="insurance_object_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Předmět pojištění: </label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="insurance_object_input" value="{{ obj.insurance_object }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="target_amount_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Cílová pojistná částka: </label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="target_amount_input" value="{{ obj.target_amount }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="valid_from_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Pojištění platné od:</label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="valid_from_input" value="{{ obj.valid_from }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="valid_to_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Pojištění platné do:</label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="valid_to_input" value="{{ obj.valid_to }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="created_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Datum vzniku pojištění:</label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="created_input" value="{{ obj.created }}" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="updated_input" class="col-form-label-lg col-12 col-sm-6 col-md-4">Datum poslední úpravy:</label>
+                <div class="col 12 col-sm-4 col-lg-2">
+                    <input type="text" readonly class="form-control" id="updated_input" value="{{ obj.updated }}" />
+                </div>
+            </div>
+        </form>
+
+        <div class="row justify-content-start">
+            <div class="col-sm-auto g-3">
+
+                {% if perms.pojisteni.change_insurancemodel %}
+                    <a class="btn btn-warning text-white" href="{% url 'update_insurance' obj.id %}"> Editovat pojištění </a>
+                {% endif %}
+
+                {% if perms.pojisteni.delete_insurancemodel %}
+                    <a class="btn btn-danger" href="{% url 'delete_insurance' obj.id %}"> Odstranit pojištění </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

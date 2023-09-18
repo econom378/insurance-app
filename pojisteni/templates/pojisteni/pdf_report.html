@@ -1,0 +1,146 @@
+ <!-- styling inside of html file is because the "xhtml2pdf"
+ doesn't allow full css, external styling or bootstrap -->
+
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pdf Report</title>
+    <style>
+        /* page definition */
+        @page {
+            size: letter portrait;   /*A4 format*/
+
+            @frame content_frame {          /*header content - left side*/
+                -pdf-frame-content: frame_header1;
+                left: 50pt;
+                width: 200pt;
+                top: 50pt;
+                height: 90pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {          /*header content - middle part*/
+                -pdf-frame-content: frame_header2;
+                left: 260pt;
+                width: 160pt;
+                top: 50pt;
+                height: 30pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {          /*header content - middle part*/
+                -pdf-frame-content: frame_header3;
+                left: 260pt;
+                width: 160pt;
+                top: 80pt;
+                height: 30pt;
+               /* -pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {          /*header content - right side*/
+                -pdf-frame-content: frame_header4;
+                left: 432pt;
+                width: 130pt;
+                top: 50pt;
+                height: 90pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {          /*header content - horizontal rule*/
+                /* Content frame 5 */
+                -pdf-frame-content: frame_header5;
+                left: 50pt;
+                width: 512pt;
+                top: 140pt;
+                height: 10pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {             /* Content frame 1 */
+                -pdf-frame-content: frame_content1;
+                left: 50pt; width: 245pt; top: 170pt; height: 230pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {             /* Content frame 2 */
+                -pdf-frame-content: frame_content2;
+                left: 317pt; width: 245pt; top: 170pt; height: 230pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame content_frame {             /* Content frame 3 */
+                -pdf-frame-content: frame_content3;
+                left: 50pt; width: 512pt; top: 420pt; height: 300pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+            @frame footer_frame {           /* Static frame - footer */
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 750pt; height: 25pt;
+                /*-pdf-frame-border: 1;    /* for debugging the layout */
+            }
+    }
+</style>
+</head>
+<body>
+    <!-- header content  -->
+    <div id="frame_header1">
+         <img id="logo" src="pojisteni/static/pojisteni/JPG/logo_dark.png" height="150px"/>
+    </div>
+    <div id="frame_header3" style="font-size: 18pt; text-align: center">
+        Summary report
+    </div>
+    <div id="frame_header4">
+        <p style="font-size: 10pt">
+            <strong style="font-size: 11pt">Town Lake Insurance</strong><br>
+            Ocean drive 45<br>
+            Jacksonville<br>
+            FL 33324<br>
+            United States of America
+        </p>
+    </div>
+    <div id="frame_header5">
+         <hr />
+    </div>
+
+    <!-- body content - upper left -->
+    <div id="frame_content1">
+        <p style="font-size: 14pt">
+            Total number of insured people:<br>
+        </p>
+        <div style="text-align: center; font-size: 18pt; color: #0d6efd">
+            {{ obj_ph }}
+        </div>
+        <p style="font-size: 14pt">
+            Total number of insurances:<br>
+        </p>
+        <div style="text-align: center; font-size: 18pt; color: #0d6efd">
+            {{ obj_ins }}
+        </div>
+        <p style="font-size: 14pt">
+            Total number of incidents:<br>
+        </p>
+        <div style="text-align: center; font-size: 18pt; color: #0d6efd">
+            {{ obj_ev }}
+        </div>
+    </div>
+
+    <!-- body content - upper right-->
+    <!-- could be replaced by dynamic content -->
+    <div id="frame_content2" style="font-size: 10pt">
+        <strong style="font-size: 14pt">Financial Strength and Integrity</strong><br><br>
+        With more than 50 years in business, Town Lake Insurance has grown from a regional organization to a national insurance group,
+        offering insurance products from coast to coast. Relationships are the cornerstone of our culture, and we believe
+        in doing the right thing. That means we invest in our business in every way possible to deliver on our mission and
+        demonstrate that people are what power our success. Our commitment to financial strength and integrity means our
+        customers can rest assured that we will be there when it counts.
+    </div>
+
+    <!-- body content - lower part -->
+    <!-- could be replaced by dynamic content -->
+    <div id="frame_content3" style="text-align: center">
+        <img src="pojisteni/static/pojisteni/JPG/chart_market.jpg" height="500px"/>
+    </div>
+
+     <!-- footer with page number -->
+    <div id="footer_content" style="text-align: center; font-size: 10pt">
+        <strong>(c) - page <pdf:pagenumber> of <pdf:pagecount></strong>
+    </div>
+</body>
+</html>

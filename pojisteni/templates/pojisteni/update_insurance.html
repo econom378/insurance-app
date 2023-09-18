@@ -1,0 +1,73 @@
+{% extends 'pojisteni/base.html' %}
+
+
+
+{% block title %}Edituj pojištění{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-0 col-sm-1 col-lg-2">
+
+        </div>
+        <div class="col-12 col-sm-10 col-lg-8">
+
+
+            {% if perms.pojisteni.change_insurancemodel %}
+
+            <section class="vh-100">
+                    <div class="container py-5 h-100">
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <div class="col-12  ">
+                                <div class="card bg-dark text-white " style="border-radius: 1rem;">
+                                    <div class="card-body text-center w-100">
+                                        <div class="mb-md-4 mt-md-4 pb-5">
+                                            <form method="post" action="" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                <h2 class="fw-bold mb-2 text-uppercase">{{ obj.name }} {{ obj.lastname }}</h2>
+                                                <p class="text-warning mb-5">upravit pojištění</p>
+
+                                                        {% for field in form %}
+
+                                                            <div class="row mb-3">
+                                                                <label for="{{ field.id_for_label }}" class="col-12 col-sm-12 col-md-12 col-lg-4 col-form-label">{{ field.label }}</label>
+                                                                <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                                                                    {{ field }}
+                                                                </div>
+                                                            </div>
+
+                                                                {% if field.help_text %}
+                                                                    <small class="form-text">{{ field.help_text }}</small>
+                                                                {% endif %}
+                                                                {% if field.errors %}
+                                                                    <div class="invalid-feedback">
+                                                                        {% for error in field.errors %}
+                                                                            {{ error }}
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                {% endif %}
+
+                                                        {% endfor %}
+                                                    <button class="btn btn-primary btn-outline-light btn-lg px-5 mt-3" type="submit">Uložit</button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% else %}
+                <h5>Nemáš oprávnění........!!!!</h5>
+            {% endif %}
+        </div>
+        <div class="col-0 col-sm-1 col-lg-2">
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

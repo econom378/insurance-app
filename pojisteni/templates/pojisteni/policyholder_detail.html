@@ -1,0 +1,99 @@
+{% extends 'pojisteni/base.html' %}
+
+{% block title %}Pojištěnec{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+            <h3 class="display-4">Informace o pojištěnci</h3>
+            <hr>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6" >
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4" >
+                            <p><img src="/{{ obj.photo }}" width=100% /></p>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-8" >
+                            <p>{{ obj.name }}&nbsp;{{ obj.lastname }}</p>
+                            <p>{{ obj.birth_id }}</p>
+                            <p>{{ obj.street }}&nbsp;{{ obj.street_no }}</p>
+                            <p>{{ obj.city }}</p>
+                            <p>{{ obj.country}}</p>
+                            <p>{{ obj.zip_code }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6" >
+                <p>{{ obj.email }}</p>
+                <p>{{ obj.cell_phone_no}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <p><h3>Sjednaná pojištění</h3></p>
+                <table class="table table-hover w-100">
+                    <thead class="table-dark">
+                        <th>Č.Poj.</th>
+                        <th>Typ pojištění</th>
+                        <th>Datum vzniku</th>
+                    </thead>
+                    <tbody>
+                        {% for insurance in ins_obj %}
+                            <tr>
+                                <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{ insurance.id }}</a></td>
+                                <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{insurance.insurance_type}}</a></td>
+                                <td><a class="text-black text-decoration-none" href="{% url 'insurance_detail' insurance.id %}">{{ insurance.created }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-sm-6">
+                <p><h3>Pojistné události</h3></p>
+                <table class="table table-hover w-100">
+                    <thead class="table-dark">
+                        <th>Č.události</th>
+                        <th>Název události</th>
+                        <th>Datum vzniku</th>
+                    </thead>
+                    <tbody>
+                        {% for event in event_obj %}
+                            <tr>
+                                <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{ event.id }}</a></td>
+                                <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{event.title}}</a></td>
+                                <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{ event.event_date }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row justify-content-around">
+            <div class="col-sm-auto g-3">
+                    {% if perms.pojisteni.add_insurancemodel %}
+                        <a class="btn btn-primary text-white" href="{% url 'create_insurance' obj.id %}"> Přidat pojištění </a>
+                    {% endif %}
+                    {% if perms.pojisteni.add_eventmodel %}
+                        <a class="btn btn-info text-white" href="{% url 'create_event' obj.id %}"> Přidat událost </a>
+                    {% endif %}
+                    {% if perms.pojisteni.change_policyholder %}
+                        <a class="btn btn-warning text-white" href="{% url 'update_policyholder' obj.id  %}"> Editovat pojištěnce </a>
+                    {% endif %}
+
+                    {% if perms.pojisteni.delete_policyholder %}
+                        <a class="btn btn-danger" href="{% url 'delete_policyholder' obj.id %}"> Odstranit pojištěnce </a>
+                    {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

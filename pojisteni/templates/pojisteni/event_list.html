@@ -1,0 +1,90 @@
+{% extends 'pojisteni/base.html' %}
+
+{% block title %}Pojistné události{% endblock %}
+
+{% block content %}
+    <div class="pojistenci jumbotron"><h1>Pojistné události</h1></div>
+
+    <p></p>
+    <table class="table table-hover w-100">
+        <thead class="table-dark">
+            <th>Č.události</th>
+            <th>Pojištěný</th>
+            <th>Název poj. události</th>
+            <th>Datum vzniku</th>
+            <th></th>
+        </thead>
+        <tbody>
+
+
+            {% for event in obj.object_list %}
+
+                <tr>
+                    <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{ event.id }}</a></td>
+                    <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{ event.policyholder}}</a></td>
+                    <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{event.title}}</a></td>
+                    <td><a class="text-black text-decoration-none" href="{% url 'event_detail' event.id %}">{{ event.event_date }}</a></td>
+                    <td>
+
+                            {% if perms.pojisteni.change_eventmodel %}
+                                <a class="btn btn-warning text-white" href="{% url 'update_event' event.id %}"> Editovat </a>
+                            {% endif %}
+
+                            {% if perms.pojisteni.delete_eventmodel %}
+                                <a class="btn btn-danger" href="{% url 'delete_event' event.id %}"> Odstranit </a>
+                            {% endif %}
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div class="container">
+        <div class = "row justify-content-center">
+            <div class="col-sm-auto">
+                <nav aria-label="...">
+                    <ul class="pagination">
+
+                        {% if obj.has_previous %}
+                            <li class="page-item ">
+                              <a class="page-link" href="{% url 'event_list'%}?page={{ obj.previous_page_number }}" tabindex="-1" aria-disabled="false">Previous</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                        {% endif %}
+
+
+                        {% for item in pages %}
+                            {% if item == page_num %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="{% url 'event_list'%}?page={{ item }}">{{ item }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{% url 'event_list'%}?page={{ item }}">{{ item }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+
+                        {% if obj.has_next %}
+                            <li class="page-item ">
+                              <a class="page-link" href="{% url 'event_list'%}?page={{ obj.next_page_number }}">Next</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                              <a class="page-link" href="#">Next</a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
