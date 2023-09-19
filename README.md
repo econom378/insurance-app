@@ -4,7 +4,7 @@
 Tento projekt byl vytvořen v rámci certifikace webového developmentu (studijní projekt) tj. nejedná se o projekt předaný zákazníkovi (projekt neobsahuje další části jako unit testy, aplikační testy, propracovanější readme.md).
 
 Projekt zajišťuje správu fiktivní pojišťovny. Celý je rozdělen na několik hlavních částí - pojištěnci, pojištění, pojistné události, generování reportů, registrace nového uživatele a přihlášení stávajícího uživatele.
-Registrační a loginovacé formulář je validován jak na straně webového prohlížeče, tak i na straně serveru.
+Registrační a loginovací formulář je validován jak na straně webového prohlížeče, tak i na straně serveru.
 Výpis pojištěnců, pojištění a událostí je realizován prostřednictvím stránkování po 10 záznamech.
 Přidávání nových pojištění a pojistných událostí je možné jen po rozkliknutí detailu příslušného pojištěnce.
 
